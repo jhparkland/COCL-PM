@@ -20,6 +20,7 @@ Deep Learning Performance Monitor Development
 
 4. **실시간 탄소 집약도 데이터는 Electricity Maps API를 통해 수집가능함.**
 - Electricity Maps 플랫폼에서 30일 무료 체험버전(trial)을 신청하여, API key(auth-token)를 받아야 함.
+  
 ![Electricity](https://github.com/jhparkland/COCL-PM/assets/80153046/1dad5ad0-6a42-4e53-aa35-3d5caa34f5cf)
 - API Doucument : [https://static.electricitymaps.com/api/docs/index.html](https://static.electricitymaps.com/api/docs/index.html)
 - Github : [https://github.com/electricitymaps/electricitymaps-contrib](https://github.com/electricitymaps/electricitymaps-contrib)
