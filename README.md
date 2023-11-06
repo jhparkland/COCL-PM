@@ -3,7 +3,8 @@ Deep Learning Performance Monitor Development
 
 ## 프로젝트 목표
 1. 딥러닝의 모델의 학습이나 연산 수준에서의 전력 소비량을 추적하고 모니터링합니다.    
-2. 측정의 단위는 연산자별, 시간별, epoch 혹은 모델의 단계(생성/학습/최적화) 등으로 나누어 질 수 있습니다. 
+2. 측정의 단위는 연산자별, 시간별, epoch 혹은 모델의 단계(생성/학습/최적화) 등으로 나누어 질 수 있습니다.
+3. 실시간 탄소 집약도(Carbon-Intensity) 데이터를 바탕으로 측정한 전력 소비량을 탄소배출량으로 변환합니다.
 
 ## 추가 설명
 1. **행렬의 곱셉(matmul)과 나눗셈(division)의 전력 소비량은 높을 수 있음.**   
@@ -16,6 +17,15 @@ Deep Learning Performance Monitor Development
 3. **모델의 크기와 효율성, 하드웨어 가속기에 따라 전력 소비량에 차이가 발생할 수 있음.**
 - 모델의 크기와 효율성은 매개변수(parameter)와 관련되어 있음. 큰 모델은 더 많은 매개변수를 가지며 이는 많은 메모리와 계산이 필요하는 의미임. 따라서 모델의 크기가 클수록 더 많은 전력을 소비하게 됨. 또한 매개변수의 사용 및 연산의 효율성은 동일한 작업을 수행하면서도 더 적은 연산과 메모리를 사용한다는 것을 의미함. 따라서 효율적인 모델은 더 적은 전력을 소비함.
 - 모델은 CPU, GPU, TPU 등 다양한 하드웨어 가속기에서 실행될 수 있음. 각 가속기에 따라서 모델을 처리하는 방식과 속도가 다름. 예를 들어 GPU는 병렬 처리가 가능하므로 대규모 연산을 빠르게 처리할 수 있으나 더 많은 전력을 소비함.
+
+4. **실시간 탄소 집약도 데이터는 Electricity Maps API를 통해 수집가능함.**
+- Electricity Maps 플랫폼에서 30일 무료 체험버전(trial)을 신청하여, API key(auth-token)를 받아야 함.
+- 탄소 집약도(Carbon-intensity)는 재생에너지, 화력, 원자력 발전량에 따라 실시간으로 변동되는 값을 가지며, 데이터의 측정 주기는 다양하게 선택하여 수집 가능함.
+- 실시간 탄소 집약도(gCO2eq/kWh)와 실시간 전력 소비량(kWh)을 곱하여 실시간 탄소 배출량을 도출 가능함.
+  
+![Electricity](https://github.com/jhparkland/COCL-PM/assets/80153046/1dad5ad0-6a42-4e53-aa35-3d5caa34f5cf)
+- API Doucument : [https://static.electricitymaps.com/api/docs/index.html](https://static.electricitymaps.com/api/docs/index.html)
+- Github : [https://github.com/electricitymaps/electricitymaps-contrib](https://github.com/electricitymaps/electricitymaps-contrib)
 
 ## 참여 신청 방법
 
