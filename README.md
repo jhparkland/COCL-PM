@@ -20,6 +20,8 @@ Deep Learning Performance Monitor Development
 
 4. **실시간 탄소 집약도 데이터는 Electricity Maps API를 통해 수집가능함.**
 - Electricity Maps 플랫폼에서 30일 무료 체험버전(trial)을 신청하여, API key(auth-token)를 받아야 함.
+- 탄소 집약도(Carbon-intensity)는 재생에너지, 화력, 원자력 발전량에 따라 실시간으로 변동되는 값을 가지며, 데이터의 측정 주기는 다양하게 선택하여 수집 가능함.
+- 실시간 탄소 집약도(gCO2eq/kWh)와 실시간 전력 소비량(kWh)을 곱하여 실시간 탄소 배출량을 도출 가능함.
   
 ![Electricity](https://github.com/jhparkland/COCL-PM/assets/80153046/1dad5ad0-6a42-4e53-aa35-3d5caa34f5cf)
 - API Doucument : [https://static.electricitymaps.com/api/docs/index.html](https://static.electricitymaps.com/api/docs/index.html)
