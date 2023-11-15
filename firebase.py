@@ -1,6 +1,12 @@
 import firebase_admin
 from firebase_admin import credentials, db
 
+# .env 파일에서 환경변수 로드
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
 class FirebaseManager:
     """
     firebase 연결 매니저
