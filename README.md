@@ -1,6 +1,10 @@
 # COCL-PM
 Deep Learning Performance Monitor Development
 
+- [x] 실시간 탄소 집약도 api 키 발급
+- [x] firebase 연동
+- [ ] GPU에서 { GPU 정보, RAM 사용률, 전력 소비량, 탄소 배출량 } 모니터링
+
 ## 프로젝트 목표
 1. 딥러닝의 모델의 학습이나 연산 수준에서의 전력 소비량을 추적하고 모니터링합니다.    
 2. 측정의 단위는 연산자별, 시간별, epoch 혹은 모델의 단계(생성/학습/최적화) 등으로 나누어 질 수 있습니다.
