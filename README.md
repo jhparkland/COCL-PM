@@ -2,8 +2,11 @@
 Deep Learning Performance Monitor Development
 
 - [x] 실시간 탄소 집약도 api 키 발급
-- [x] firebase 연동
-- [ ] GPU에서 { GPU 정보, RAM 사용률, 전력 소비량, 탄소 배출량 } 모니터링
+- [x] 가장 최근 탄소 집약도 불러와 firebase와 연동
+- [x] GPU에서 { GPU 정보, RAM 사용률, 전력 소비량, 탄소 배출량 } 추출
+- [ ] 기존 gpu_utils의 class에 추가
+- [ ] PC별 고유 number를 추적하여 firebase DB에 저장
+- [ ] Mac 지원?
 
 ## 프로젝트 목표
 1. 딥러닝의 모델의 학습이나 연산 수준에서의 전력 소비량을 추적하고 모니터링합니다.    
