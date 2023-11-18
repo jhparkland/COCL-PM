@@ -73,9 +73,9 @@ class CPUID(object):
         elif platform.machine() not in ("AMD64", "x86_64", "x86", "i686"):
             raise SystemError("Only available for x86")
             
-        is_windows = os.name == "nt"
+        self.is_windows = os.name == "nt"
         is_64bit   = ctypes.sizeof(ctypes.c_voidp) == 8
-        if is_windows:
+        if self.is_windows:
             if is_64bit:
                 # VirtualAlloc seems to fail under some weird
                 # circumstances when ctypes.windll.kernel32 is
@@ -94,7 +94,7 @@ class CPUID(object):
         size = len(opc)
         code = (ctypes.c_ubyte * size)(*opc)
 
-        if is_windows:
+        if self.is_windows:
             self.win.VirtualAlloc.restype = c_void_p
             self.win.VirtualAlloc.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_ulong, ctypes.c_ulong]
             self.addr = self.win.VirtualAlloc(None, size, 0x1000, 0x40)
@@ -132,7 +132,7 @@ class CPUID(object):
     def __del__(self):
         if platform.machine() == "aarch64" or platform.machine() == "arm64":
             pass
-        elif is_windows:
+        elif self.is_windows:
             self.win.VirtualFree.restype = c_long
             self.win.VirtualFree.argtypes = [c_void_p, c_size_t, c_ulong]
             self.win.VirtualFree(self.addr, 0, 0x8000)
