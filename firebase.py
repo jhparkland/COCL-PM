@@ -1,5 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, db
+import cpuid
+import encryptor
 
 # .env 파일에서 환경변수 로드
 import os
@@ -18,8 +20,15 @@ class FirebaseManager:
         self.app = firebase_admin.initialize_app (self.config, {
             'databaseURL' : 'https://cocl-pm-default-rtdb.firebaseio.com'
         })
-     # firebase app에 대한 참조 가져오기
-        self.dbs = db.reference ('/') # database 서비스에 대한 참조 가져오기
+        print("firebase init success")
+
+        self.cpuid = cpuid.CPUID()
+        print("cpuid init success")
+        self.encryptor = encryptor.NumberEncryptor()
+        self.encrypted_result = self.encryptor.encrypt_number(self.cpuid(0))
+        print("encryptor init success")
+        # firebase app에 대한 참조 가져오기
+        self.dbs = db.reference (f'/{self.encrypted_result}') # database 서비스에 대한 참조 가져오기
 
 
     """
@@ -27,3 +36,4 @@ class FirebaseManager:
     """
     def update(self, data):
         self.dbs.update(data)
+        print("firebase update success")
