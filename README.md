@@ -3,7 +3,10 @@ Deep Learning Performance Monitor Development
 
 - [x] 실시간 탄소 집약도 api 키 발급
 - [x] firebase 연동
-- [ ] GPU에서 { GPU 정보, RAM 사용률, 전력 소비량, 탄소 배출량 } 모니터링
+- [x] GPU에서 { RAM 사용률, 전력 소비량, 탄소 배출량 } 모니터링
+- [x] 여러 PC에서 다중으로 모니터링이 가능하도록 PC의 고유 CPUID를 가져와 sha256으로 해싱하여 각각의 PC를 모니터링 할 수 있도록 분리
+  - [x] CPUID 구현 ("Apple Silicon M1 chip", "AMD64", "x86_64", "x86", "i686")
+  - [x] sha256 hashing
 
 ## 프로젝트 목표
 1. 딥러닝의 모델의 학습이나 연산 수준에서의 전력 소비량을 추적하고 모니터링합니다.    
