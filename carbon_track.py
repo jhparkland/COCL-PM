@@ -27,10 +27,11 @@ class CarbonTrack:
         except Exception as e:
             print("carbon_intensity data update failed")
             print(e)
-            
+        
+        print(f"GPU Name: {gpu_info.gpu_name}")
         print(f"GPU {gpu_info.gpu_id}의 메모리 사용량: {self.memory_usage} MiB")
         print(f"GPU {gpu_info.gpu_id}의 전력 사용량: {self.power_usage} kWh")
-        self.gpu = json.loads(json.dumps({'memory_usage': self.memory_usage, 'power_usage': self.power_usage}))
+        self.gpu = json.loads(json.dumps({'gpu_info': gpu_info.gpu_name, 'memory_usage': self.memory_usage, 'power_usage': self.power_usage}))
         fm.update(self.gpu)
         
 

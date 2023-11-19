@@ -3,9 +3,9 @@ import subprocess
 class GPUInfo:
     def __init__(self, gpu_id):
         self.gpu_id = gpu_id
+        self.gpu_name = None
         self.default_gpu_usage = None  # Set this if needed
         self.memory_total = self.get_gpu_info()
-        print(self.memory_total)
         
     def get_gpu_info(self):
         try:
@@ -16,7 +16,7 @@ class GPUInfo:
             # 결과 파싱
             lines = result.strip().split('\n')
 
-            gpu_name, self.memory_total = lines[0].strip().split(',')
+            self.gpu_name, self.memory_total = lines[0].strip().split(',')
      
             return int(self.memory_total.strip())
             '''{
