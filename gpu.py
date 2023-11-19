@@ -4,6 +4,28 @@ class GPUInfo:
     def __init__(self, gpu_id):
         self.gpu_id = gpu_id
         self.default_gpu_usage = None  # Set this if needed
+        self.memory_total = self.get_gpu_info()
+        print(self.memory_total)
+        
+    def get_gpu_info(self):
+        try:
+            # nvidia-smi 명령 실행
+            command = "nvidia-smi --query-gpu=name,memory.total --format=csv,noheader,nounits"
+            result = subprocess.check_output(command, shell=True, universal_newlines=True)
+
+            # 결과 파싱
+            lines = result.strip().split('\n')
+
+            gpu_name, self.memory_total = lines[0].strip().split(',')
+     
+            return int(self.memory_total.strip())
+            '''{
+                "GPU Name": gpu_name.strip(),
+                "Memory Total": memory_total.strip(),
+            }'''
+        except Exception as e:
+            print("Error:", e)
+            return None
 
     def get_gpu_memory_usage(self):
         # nvidia-smi command
@@ -13,7 +35,7 @@ class GPUInfo:
         # result parsing
         memory_used = int(result.strip())  # in MiB
 
-        return memory_used
+        return memory_used / int(self.memory_total)
 
     def get_gpu_power_usage(self):
         # nvidia-smi command
@@ -30,11 +52,3 @@ class GPUInfo:
             return power_draw
         else:
             return 0.0
-
-# 예를 들어 GPU 0번에 대한 정보 가져오기
-gpu_info = GPUInfo(gpu_id=0)
-memory_usage = gpu_info.get_gpu_memory_usage()
-power_usage = gpu_info.get_gpu_power_usage()
-
-print(f"GPU {gpu_info.gpu_id}의 메모리 사용량: {memory_usage} MiB")
-print(f"GPU {gpu_info.gpu_id}의 전력 사용량: {power_usage} kW")
