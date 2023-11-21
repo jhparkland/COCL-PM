@@ -28,7 +28,7 @@ class FirebaseManager:
         self.encrypted_result = self.encryptor.encrypt_number(self.cpuid(0))
         print("encryptor init success")
         # firebase app에 대한 참조 가져오기
-        self.dbs = db.reference (f'/{self.encrypted_result}') # database 서비스에 대한 참조 가져오기
+        self.dbs = db.reference(f'/{self.encrypted_result}') # database 서비스에 대한 참조 가져오기
 
 
     """
@@ -37,3 +37,8 @@ class FirebaseManager:
     def update(self, data):
         self.dbs.update(data)
         print("firebase update success")
+
+    def post(self, path, data):
+        dbs = db.reference(f'/{self.encrypted_result}/{path}')
+        dbs.update(data)
+        print("firebase push success")
