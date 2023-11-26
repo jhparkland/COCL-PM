@@ -7,7 +7,7 @@ from firebase import FirebaseManager
 from firebase_admin import db
 import json
 from gpu import GPUInfo
-from datetime import datetime
+# from datetime import datetime
 
 class CarbonTrack:
     def __init__(self):
@@ -26,7 +26,8 @@ class CarbonTrack:
         print(f"GPU {self.gpu_info.gpu_id}의 전력 사용량: {self.power_usage} kWh")
         data = {'carbon_intensity': self.carbon_intensity['carbon_intensity'], 'gpu_info': self.gpu_info.gpu_name, 'memory_usage': self.memory_usage, 'power_usage': self.power_usage}
         self.gpu = json.loads(json.dumps(data))
-        self.fm.post(str(datetime.now().strftime('%Y%m%d%H%M%S')), self.gpu)
+        # self.fm.post(str(datetime.now().strftime('%Y%m%d%H%M%S')), self.gpu)
+        self.fm.update(self.gpu)
 
     def collect(self):
         self.memory_usage = self.gpu_info.get_gpu_memory_usage()
@@ -34,4 +35,5 @@ class CarbonTrack:
         self.carbon_intensity = json.loads(json.dumps(carbon_intensity(zone='KR', data='intensity', format='history')))
         data = {'carbon_intensity': self.carbon_intensity['carbon_intensity'], 'gpu_info': self.gpu_info.gpu_name, 'memory_usage': self.memory_usage, 'power_usage': self.power_usage}
         self.gpu = json.loads(json.dumps(data))
-        self.fm.post(str(datetime.now().strftime('%Y%m%d%H%M%S')), self.gpu)
+        # self.fm.post(str(datetime.now().strftime('%Y%m%d%H%M%S')), self.gpu)
+        self.fm.update(self.gpu)
