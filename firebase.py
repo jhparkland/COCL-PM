@@ -1,5 +1,5 @@
 import firebase_admin
-from firebase_admin import credentials, db
+from firebase_admin import credentials, db, firestore
 import cpuid
 import encryptor
 
@@ -20,6 +20,9 @@ class FirebaseManager:
         self.app = firebase_admin.initialize_app (self.config, {
             'databaseURL' : 'https://cocl-pm-default-rtdb.firebaseio.com'
         })
+
+        self.db = firestore.client()
+
         print("firebase init success")
 
         self.cpuid = cpuid.CPUID()
@@ -42,3 +45,30 @@ class FirebaseManager:
         dbs = db.reference(f'/{self.encrypted_result}/{path}')
         dbs.update(data)
         print("firebase push success")
+
+    def getdata(self, local=False):
+        if local:
+            dbs = db.reference(f'/{self.encrypted_result}/')
+        else:
+            dbs = db.reference(f'/')
+        data = dbs.get()
+
+        if data:
+            print("Firebase get success")
+            return data
+        else:
+            print("Firebase get failed")
+            return None
+
+if __name__ == "__main__":
+    # FirebaseDataLoader 인스턴스 생성
+    loader = FirebaseManager()
+
+    data = loader.getdata()
+
+    if data:
+        print("Data retrieved:", data)
+    else:
+        print("Failed to retrieve data from Firebase.")
+    # 데이터 변경 이벤트를 수신할 Firestore 컬렉션 경로
+    
