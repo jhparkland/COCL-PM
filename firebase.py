@@ -3,7 +3,7 @@ from firebase_admin import credentials, db, firestore
 import cpuid
 import encryptor
 
-# .env 파일에서 환경변수 로드
+# Loading environment variables from an .env file
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -11,7 +11,7 @@ load_dotenv()
 
 class FirebaseManager:
     """
-    firebase 연결 매니저
+    firebase connection manager
     """
 
     def __init__(self):
@@ -30,12 +30,12 @@ class FirebaseManager:
         self.encryptor = encryptor.NumberEncryptor()
         self.encrypted_result = self.encryptor.encrypt_number(self.cpuid(0))
         print("encryptor init success")
-        # firebase app에 대한 참조 가져오기
-        self.dbs = db.reference(f'/{self.encrypted_result}') # database 서비스에 대한 참조 가져오기
+        # Get a reference to a firebase app
+        self.dbs = db.reference(f'/{self.encrypted_result}') # Get a reference to the database service
 
 
     """
-    firebase에 데이터 업데이트
+    Updating data to firebase
     """
     def update(self, data):
         self.dbs.update(data)
@@ -61,7 +61,7 @@ class FirebaseManager:
             return None
 
 if __name__ == "__main__":
-    # FirebaseDataLoader 인스턴스 생성
+    # Create a FirebaseDataLoader instance
     loader = FirebaseManager()
 
     data = loader.getdata()
@@ -70,5 +70,4 @@ if __name__ == "__main__":
         print("Data retrieved:", data)
     else:
         print("Failed to retrieve data from Firebase.")
-    # 데이터 변경 이벤트를 수신할 Firestore 컬렉션 경로
-    
+    # Path to the Firestore collection that will receive data change events
