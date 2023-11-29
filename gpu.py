@@ -1,11 +1,16 @@
 import subprocess
+import re
+import platform
 
 class GPUInfo:
     def __init__(self, gpu_id):
         self.gpu_id = gpu_id
         self.gpu_name = None
         self.default_gpu_usage = None  # Set this if needed
-        self.memory_total = self.get_gpu_info()
+        if platform.machine() == "aarch64" or platform.machine() == "arm64":
+            pass
+        else:
+            self.memory_total = self.get_gpu_info()
         
     def get_gpu_info(self):
         try:
@@ -43,7 +48,7 @@ class GPUInfo:
         result = subprocess.check_output(command, shell=True, universal_newlines=True)
 
         # result parsing
-        power_draw = float(result.strip()) / 1000.0  # Convert to kW
+        power_draw = float(result.strip()) / 100.0  # Convert to kW
 
         if self.default_gpu_usage is not None:
             power_draw -= self.default_gpu_usage
@@ -52,3 +57,22 @@ class GPUInfo:
             return power_draw
         else:
             return 0.0
+
+    def get_gpu_m1(self):
+        command = "sudo powermetrics --sample-count 1 gpu_power --show-process-energy"
+        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output = result.stdout
+        # 정규 표현식 패턴
+        residency_pattern = re.compile(r"GPU idle residency:\s+([\d.]+)%")
+        power_pattern = re.compile(r"GPU Power:\s+(\d+)\s+mW")
+
+        # 매칭 수행
+        residency_match = residency_pattern.search(output)
+        power_match = power_pattern.search(output)
+
+        # 결과 추출
+        idle_residency = float(residency_match.group(1)) if residency_match else None
+        gpu_power = int(power_match.group(1)) if power_match else None
+        gpu_usage = round(100 - idle_residency, 2) if idle_residency is not None else None
+
+        return gpu_usage, gpu_power*0.1
