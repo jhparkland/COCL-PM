@@ -1,5 +1,5 @@
 """
-Real_time database와 연동
+Integration with Real_time database
 """
 
 from carbon_api import carbon_intensity
@@ -13,7 +13,7 @@ import time
 
 class CarbonTrack:
     def __init__(self):
-        self.fm = FirebaseManager() # firebase 연결 완료
+        self.fm = FirebaseManager() # Complete firebase connection
         self.gpu_info = GPUInfo(gpu_id=0)
         if platform.machine() == "aarch64" or platform.machine() == "arm64":
             self.gpu_info.gpu_name = "macOS M1 GPU"
@@ -30,8 +30,8 @@ class CarbonTrack:
         self.carbon_intensity = json.loads(json.dumps(carbon_intensity(zone='KR', data='intensity', format='history')))
         print("run __init__ part")
         print(f"GPU Name: {self.gpu_info.gpu_name}")
-        print(f"GPU {self.gpu_info.gpu_id}의 메모리 사용량: {self.memory_usage} %")
-        print(f"GPU {self.gpu_info.gpu_id}의 전력 사용량: {self.power_usage} kWh")
+        print(f"Memory usage of GPU {self.gpu_info.gpu_id}: {self.memory_usage} %")
+        print(f"Power usage of GPU {self.gpu_info.gpu_id}: {self.power_usage} kWh")
         data = {'carbon_intensity': self.carbon_intensity['carbon_intensity'], 'gpu_info': self.gpu_info.gpu_name, 'memory_usage': self.memory_usage, 'power_usage': self.power_usage}
         self.gpu = json.loads(json.dumps(data))
         # self.fm.post(str(datetime.now().strftime('%Y%m%d%H%M%S')), self.gpu)
@@ -55,4 +55,4 @@ if __name__ == "__main__":
     ct = CarbonTrack()
     while True:
         ct.collect()
-        time.sleep(60) # 1분마다 데이터 수집
+        time.sleep(60) # Collect data every minute
