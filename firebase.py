@@ -14,11 +14,11 @@ class FirebaseManager:
     firebase 연결 매니저
     """
 
-    def __init__(self):
+    def __init__(self, json_file_path, database_url):
         # Firebase database init
-        self.config = credentials.Certificate('cocl-pm-firebase.json')
+        self.config = credentials.Certificate(json_file_path)
         self.app = firebase_admin.initialize_app (self.config, {
-            'databaseURL' : 'https://cocl-pm-default-rtdb.firebaseio.com'
+            'databaseURL' : database_url
         })
 
         self.db = firestore.client()
@@ -59,16 +59,3 @@ class FirebaseManager:
         else:
             print("Firebase get failed")
             return None
-
-if __name__ == "__main__":
-    # FirebaseDataLoader 인스턴스 생성
-    loader = FirebaseManager()
-
-    data = loader.getdata()
-
-    if data:
-        print("Data retrieved:", data)
-    else:
-        print("Failed to retrieve data from Firebase.")
-    # 데이터 변경 이벤트를 수신할 Firestore 컬렉션 경로
-    
