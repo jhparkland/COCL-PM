@@ -1,5 +1,5 @@
 """
-Real_time database와 연동
+Integration with Real_time database
 """
 
 from carbon_api import CarbonIntensityAPI
@@ -25,8 +25,8 @@ class CarbonTrack:
         self.carbon_intensity = json.loads(json.dumps(CarbonIntensityAPI(carbon_api_key).get_carbon_intensity(zone='KR', data='intensity', format='history')))
         print("run __init__ part")
         print(f"GPU Name: {self.gpu_info.gpu_name}")
-        print(f"GPU {self.gpu_info.gpu_id}의 메모리 사용량: {self.memory_usage} %")
-        print(f"GPU {self.gpu_info.gpu_id}의 전력 사용량: {self.power_usage} kWh")
+        print(f"Memory usage of GPU {self.gpu_info.gpu_id}: {self.memory_usage} %")
+        print(f"Power usage of GPU {self.gpu_info.gpu_id}: {self.power_usage} kWh")
         data = {'carbon_intensity': self.carbon_intensity['carbon_intensity'], 'gpu_info': self.gpu_info.gpu_name, 'memory_usage': self.memory_usage, 'power_usage': self.power_usage}
         self.gpu = json.loads(json.dumps(data))
         self.fm.update(self.gpu)
