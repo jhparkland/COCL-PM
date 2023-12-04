@@ -14,11 +14,9 @@ class GPUInfo:
         
     def get_gpu_info(self):
         try:
-            # Run the nvidia-smi command
             command = "nvidia-smi --query-gpu=name,memory.total --format=csv,noheader,nounits"
             result = subprocess.check_output(command, shell=True, universal_newlines=True)
 
-            # Parsing the result
             lines = result.strip().split('\n')
 
             self.gpu_name, self.memory_total = lines[0].strip().split(',')
@@ -62,17 +60,15 @@ class GPUInfo:
         command = "sudo powermetrics --sample-count 1 gpu_power --show-process-energy"
         result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         output = result.stdout
-        # Regular expression pattern
+
         residency_pattern = re.compile(r"GPU idle residency:\s+([\d.]+)%")
         power_pattern = re.compile(r"GPU Power:\s+(\d+)\s+mW")
 
-        # Perform a match
         residency_match = residency_pattern.search(output)
         power_match = power_pattern.search(output)
 
-        # Extract results
         idle_residency = float(residency_match.group(1)) if residency_match else None
         gpu_power = int(power_match.group(1)) if power_match else None
         gpu_usage = round(100 - idle_residency, 2) if idle_residency is not None else None
 
-        return gpu_usage, gpu_power*0.1
+        return gpu_usage*0.01, gpu_power*0.1

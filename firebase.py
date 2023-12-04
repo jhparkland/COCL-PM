@@ -14,11 +14,11 @@ class FirebaseManager:
     firebase connection manager
     """
 
-    def __init__(self):
+    def __init__(self, json_file_path, database_url):
         # Firebase database init
-        self.config = credentials.Certificate('cocl-pm-firebase.json')
+        self.config = credentials.Certificate(json_file_path)
         self.app = firebase_admin.initialize_app (self.config, {
-            'databaseURL' : 'https://cocl-pm-default-rtdb.firebaseio.com'
+            'databaseURL' : database_url
         })
 
         self.db = firestore.client()
@@ -59,15 +59,3 @@ class FirebaseManager:
         else:
             print("Firebase get failed")
             return None
-
-if __name__ == "__main__":
-    # Create a FirebaseDataLoader instance
-    loader = FirebaseManager()
-
-    data = loader.getdata()
-
-    if data:
-        print("Data retrieved:", data)
-    else:
-        print("Failed to retrieve data from Firebase.")
-    # Path to the Firestore collection that will receive data change events
