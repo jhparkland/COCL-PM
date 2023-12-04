@@ -44,5 +44,3 @@ def carbon_intensity(zone='KR', data='intensity', format='history'):
         # failed request
         print("Error:", response.status_code, response.text)
         return None
-
-# carbon_intensity()
