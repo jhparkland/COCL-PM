@@ -5,7 +5,7 @@ from tensorflow.keras.utils import to_categorical
 from keras.callbacks import Callback
 from carbon_track import CarbonTrack
 
-ct = CarbonTrack('firebase-token.json', 'firebase-database-url', 'carbon-api-key')
+ct = CarbonTrack('firebase-token.json path', 'firebase-database-url', 'carbon-api-key')
 
 class CustomCallback(Callback):
     def on_epoch_begin(self, epoch, logs=None):
@@ -47,3 +47,7 @@ model.fit(train_images, train_labels, epochs=5, batch_size=64, validation_split=
 # Evaluate models
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print(f'Test accuracy: {test_acc}')
+
+print("get firebase data")
+log = ct.getdata(local=True)
+print(log)

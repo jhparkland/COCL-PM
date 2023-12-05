@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from carbon_track import CarbonTrack
 
-ct = CarbonTrack('firebase-token.json', 'firebase-database-url', 'carbon-api-key')
+ct = CarbonTrack('firebase-token.json path', 'firebase-database-url', 'carbon-api-key')
 
 # Data preprocessing and loading
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
@@ -74,3 +74,7 @@ with torch.no_grad():
 
 accuracy = correct / total
 print(f'Test Accuracy: {accuracy * 100:.2f}%')
+
+print("get firebase data")
+log = ct.getdata(local=True)
+print(log)
