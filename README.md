@@ -39,3 +39,20 @@ Deep Learning Performance Monitor Development
 1. issues 탭 클릭
 2. new issues 클릭 후 가입신청 템플릿 선택
 3. 양식에 맞춰 작성
+
+## 사용 예시
+```py
+from carbon_track import CarbonTrack
+
+ct = CarbonTrack('firebase-token.json path', 'firebase-database-url', 'carbon-api-key')
+
+# Run the collect method where you want data to be collected
+# The collected information will be posted on the firebase DB that called the CarbonTrack Class.
+ct.collect()
+
+# If you want to check the firebase collection information in this package
+# If you turn on the local option, only the current PC's collection information is imported.
+# If you turn off the option, it fetches information from all the pc collected in the DB.
+log = ct.getdata(local=True)
+print(log)
+```

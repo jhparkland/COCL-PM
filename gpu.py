@@ -71,4 +71,4 @@ class GPUInfo:
         gpu_power = int(power_match.group(1)) if power_match else None
         gpu_usage = round(100 - idle_residency, 2) if idle_residency is not None else None
 
-        return gpu_usage*0.01, gpu_power*0.1
+        return gpu_usage, gpu_power*0.1
